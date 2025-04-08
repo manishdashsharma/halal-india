@@ -277,6 +277,99 @@ const Certification = () => {
         { id: 1, name: '', category: '', price: '', priceType: '', label: '' }
     ])
 
+    // Add state for Hotel Service List
+    const [hotelServicesList, setHotelServicesList] = useState([
+        {
+            id: 1,
+            serviceName: 'Concierge Services',
+            description: 'Assistance with travel arrangements, restaurant reservations, and other guest requests.',
+            status: 'Provided by hotel administration',
+            managerName: 'Mohammed Akhlaq',
+            managerNumber: '9876543210',
+            isDefault: true // Flag for default rows
+        },
+        {
+            id: 2,
+            serviceName: 'Front Desk Services',
+            description: 'Efficient check-in and check-out services, as well as information about the hotels facilities and local attractions.',
+            status: 'Provided by hotel administration',
+            managerName: 'Mohammed Akhlaq',
+            managerNumber: '9876543210',
+            isDefault: true // Flag for default rows
+        },
+        {
+            id: 3,
+            serviceName: 'Room Service',
+            description: '24/7 room service offering a diverse menu for in-room dining.',
+            status: '',
+            managerName: '',
+            managerNumber: '',
+            isDefault: true // Flag for default rows
+        },
+        {
+            id: 4,
+            serviceName: 'Luxurious Accommodations',
+            description: 'Well-appointed rooms and suites with high-quality furnishings, bedding, and amenities.',
+            status: '',
+            managerName: '',
+            managerNumber: '',
+            isDefault: true // Flag for default rows
+        }
+    ]);
+
+    // Add state for Health Service List
+    const [healthServicesList, setHealthServicesList] = useState([
+        {
+            id: 1,
+            serviceName: 'Patient Welcome Services',
+            description: 'Greeting patients upon arrival and assisting with the check-in process.',
+            status: '',
+            isDefault: true
+        },
+        {
+            id: 2,
+            serviceName: 'Patient Accommodation Services',
+            description: 'Efficient check-in and check-out services, as well as information about the hotel\'s facilities and local attractions.', // Placeholder?
+            status: '',
+            isDefault: true
+        },
+        {
+            id: 3,
+            serviceName: 'Patient Transport Services',
+            description: 'Providing assistance with patient transportation within the healthcare facility.',
+            status: '',
+            isDefault: true
+        },
+        {
+            id: 4,
+            serviceName: 'Room Amenities',
+            description: 'Offering amenities such as TV, Wi-Fi, reading materials, and other comforts to make the patient\'s stay more pleasant.',
+            status: '',
+            isDefault: true
+        },
+        {
+            id: 5,
+            serviceName: 'Cafeteria and Dining Services',
+            description: 'Assistance with travel arrangements, restaurant reservations, and other guest requests.', // Placeholder?
+            status: '',
+            isDefault: true
+        }
+    ]);
+
+    // Add state for Meat Procurement List
+    const [meatProcurementList, setMeatProcurementList] = useState([
+        {
+            id: 1,
+            particular: 'Marinated or Prepared Meats',
+            category: 'Deli Meats (e.g., ham, turkey, roast...)',
+            subCategory: 'Fresh farm',
+            quantity: '30 kgs',
+            supplierName: 'Aslam Khan',
+            pocName: 'Aslam Khan',
+            pocContact: '9876543210'
+        }
+    ]);
+
     const [selectedProduct, setSelectedProduct] = useState(null)
     const [productSpecifications, setProductSpecifications] = useState({})
 
@@ -462,6 +555,83 @@ const Certification = () => {
         ));
     };
 
+    // Add handlers for Hotel Service List
+    const handleAddHotelServiceRow = () => {
+        setHotelServicesList([
+            ...hotelServicesList,
+            {
+                id: hotelServicesList.length ? Math.max(...hotelServicesList.map(item => item.id)) + 1 : 1, // Ensure unique ID
+                serviceName: '',
+                description: '',
+                status: '',
+                managerName: '',
+                managerNumber: '',
+                isDefault: false // Flag for non-default rows
+            }
+        ]);
+    };
+
+    const handleRemoveHotelServiceRow = (id) => {
+        setHotelServicesList(hotelServicesList.filter(item => item.id !== id));
+    };
+
+    const handleHotelServiceChange = (id, field, value) => {
+        setHotelServicesList(hotelServicesList.map(item =>
+            item.id === id ? { ...item, [field]: value } : item
+        ));
+    };
+
+    // Add handlers for Health Service List
+    const handleAddHealthServiceRow = () => {
+        setHealthServicesList([
+            ...healthServicesList,
+            {
+                id: healthServicesList.length ? Math.max(...healthServicesList.map(item => item.id)) + 1 : 1, // Ensure unique ID
+                serviceName: '',
+                description: '',
+                status: '',
+                isDefault: false // New rows are not default
+            }
+        ]);
+    };
+
+    const handleRemoveHealthServiceRow = (id) => {
+        setHealthServicesList(healthServicesList.filter(item => item.id !== id));
+    };
+
+    const handleHealthServiceChange = (id, field, value) => {
+        setHealthServicesList(healthServicesList.map(item =>
+            item.id === id ? { ...item, [field]: value } : item
+        ));
+    };
+
+    // Add handlers for Meat Procurement List
+    const handleAddMeatProcurementRow = () => {
+        setMeatProcurementList([
+            ...meatProcurementList,
+            {
+                id: meatProcurementList.length ? Math.max(...meatProcurementList.map(item => item.id)) + 1 : 1, // Ensure unique ID
+                particular: '',
+                category: '',
+                subCategory: '',
+                quantity: '',
+                supplierName: '',
+                pocName: '',
+                pocContact: ''
+            }
+        ]);
+    };
+
+    const handleRemoveMeatProcurementRow = (id) => {
+        setMeatProcurementList(meatProcurementList.filter(item => item.id !== id));
+    };
+
+    const handleMeatProcurementChange = (id, field, value) => {
+        setMeatProcurementList(meatProcurementList.map(item =>
+            item.id === id ? { ...item, [field]: value } : item
+        ));
+    };
+
     // Animation variants
     const tabContentVariants = {
         hidden: { opacity: 0, x: 20 },
@@ -486,7 +656,7 @@ const Certification = () => {
                         <motion.button
                             key={tab}
                             onClick={() => handleTabChange(tab)}
-                            className={`pb-2 font-medium relative ${activeTab === tab ? 'text-blue-500' : 'text-gray-600'}`}
+                            className={`pb-2  font-medium relative ${activeTab === tab ? 'text-blue-500' : 'text-gray-600'}`}
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.95 }}>
                             {tab === 'agreements' && 'Agreements & NDAs'}
@@ -494,7 +664,7 @@ const Certification = () => {
                             {tab === 'service' && 'Service Listing'}
                             {activeTab === tab && (
                                 <motion.div
-                                    className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-500"
+                                    className="absolute  bottom-0 left-0 right-0 h-0.5 bg-blue-500"
                                     layoutId="tabIndicator"
                                     initial={false}
                                     transition={{ type: 'spring', stiffness: 500, damping: 30 }}
@@ -576,7 +746,7 @@ const Certification = () => {
             {/* Sub tabs for Service Listing */}
             {activeTab === 'service' && (
                 <motion.div
-                    className="flex space-x-2 mb-6 overflow-x-auto pb-2"
+                    className="flex space-x-2 mb-6 overflow-x-auto pb-2 pr-4"
                     initial={{ opacity: 0, y: -5 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3 }}>
@@ -608,50 +778,18 @@ const Certification = () => {
 
             {/* Company Profile Section */}
             <div className="mb-6">
-                <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-lg font-medium">
-                        {activeTab === 'agreements'
-                            ? 'Company Profile'
-                            : applicationSubTab === 'company'
-                              ? 'Company Profile'
-                              : applicationSubTab === 'manufacturing'
-                                ? 'Manufacturing Plant Profile'
-                                : applicationSubTab === 'correspondence'
-                                  ? 'Correspondence Person'
-                                  : applicationSubTab === 'product'
-                                    ? 'Product Information'
-                                    : ''}
-                    </h2>
-                    {activeTab === 'agreements' && currentAgreement === 'logomark' && (
-                        <div className="flex space-x-4">
-                            <PDFDownloadLink
-                                document={<HalalLogoMarkAgreementPDF />}
-                                fileName="halal_logo_mark_agreement.pdf"
-                                className="flex items-center text-gray-600 hover:text-blue-500">
-                                {({ blob, url, loading, error }) =>
-                                    loading ? (
-                                        'Loading document...'
-                                    ) : (
-                                        <span className="flex items-center">
-                                            <BiDownload className="mr-1" /> Download
-                                        </span>
-                                    )
-                                }
-                            </PDFDownloadLink>
-                            <motion.span
-                                onClick={() => setTermsAccepted(true)}
-                                className="bg-blue-500 text-white px-3 py-1 rounded text-sm cursor-pointer"
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}>
-                                Accepted
-                            </motion.span>
-                        </div>
-                    )}
-                </div>
+               
 
                 <AnimatePresence mode="wait">
                     {/* Non Disclosure Agreement */}
                     {activeTab === 'agreements' && currentAgreement === 'nda' && (
+                        <>
+                         <motion.h1 
+                            variants={agreementVariants}
+                            initial="hidden"
+                            animate="visible"
+                            exit="exit"
+                            className='text-lg font-semibold mb-4'>Non disclosure agreement</motion.h1> 
                         <motion.div
                             key="nda-agreement"
                             className="bg-white border rounded-lg p-6"
@@ -738,10 +876,46 @@ const Certification = () => {
                                 </motion.button>
                             </div>
                         </motion.div>
+                        </>
                     )}
 
                     {/* Halal Standard Logo Mark Agreement */}
                     {activeTab === 'agreements' && currentAgreement === 'logomark' && (
+                        <>
+                         <div className="flex justify-between items-center mb-4">
+                         <motion.h1 
+                            variants={agreementVariants}
+                            initial="hidden"
+                            animate="visible"
+                            exit="exit"
+                            className='text-lg font-semibold mb-4'>Halal standard logo mark agreement</motion.h1>
+                   
+                       <div className="flex space-x-4">
+                           <PDFDownloadLink
+                               document={<HalalLogoMarkAgreementPDF />}
+                               fileName="halal_logo_mark_agreement.pdf"
+                               className="flex items-center text-gray-600 hover:text-blue-500">
+                               {({ blob, url, loading, error }) =>
+                                   loading ? (
+                                       'Loading document...'
+                                   ) : (
+                                       <span className="flex items-center">
+                                           <BiDownload className="mr-1" /> Download
+                                       </span>
+                                   )
+                               }
+                           </PDFDownloadLink>
+                           <motion.span
+                               onClick={() => setTermsAccepted(true)}
+                               className="bg-blue-500 text-white px-3 py-1 rounded text-sm cursor-pointer"
+                               whileHover={{ scale: 1.05 }}
+                               whileTap={{ scale: 0.95 }}>
+                               Accepted
+                           </motion.span>
+                       </div>
+
+               </div>
+                        
                         <motion.div
                             key="logomark-agreement"
                             className="bg-white border rounded-lg p-6"
@@ -834,10 +1008,19 @@ const Certification = () => {
                                 </motion.button>
                             </div>
                         </motion.div>
+                        </>
                     )}
 
                     {/* Application Form Tab Content */}
                     {activeTab === 'application' && applicationSubTab === 'company' && (
+                        <>
+                         <motion.h1 
+                            key="company-profile-tab-text"
+                            variants={agreementVariants}
+                            initial="hidden"
+                            animate="visible"
+                            exit="exit"
+                            className='text-lg font-semibold mb-4'>Company Profile</motion.h1>
                         <motion.div
                             key="company-profile-tab"
                             className="bg-white border rounded-lg p-6"
@@ -1005,11 +1188,20 @@ const Certification = () => {
                                 </motion.button>
                             </div>
                         </motion.div>
+                        </>
                     )}
 
                     {/* Manufacturing Plant Profile Tab */}
                     {activeTab === 'application' && applicationSubTab === 'manufacturing' && (
-                        <motion.div
+                       <>
+                        <motion.h1 
+                            key="manufacturing-plant-tab-text"
+                            variants={agreementVariants}
+                            initial="hidden"
+                            animate="visible"
+                            exit="exit"
+                            className='text-lg font-semibold mb-4'>Manufacturing Plant Profile</motion.h1>
+                       <motion.div
                             key="manufacturing-plant-tab"
                             className="bg-white border rounded-lg p-6"
                             variants={tabContentVariants}
@@ -1319,10 +1511,19 @@ const Certification = () => {
                                 </motion.button>
                             </div>
                         </motion.div>
+                       </>
                     )}
 
                     {/* Correspondence Person Tab */}
                     {activeTab === 'application' && applicationSubTab === 'correspondence' && (
+                        <>
+                          <motion.h1 
+                          key="correspondence-person-tab-text"
+                            variants={agreementVariants}
+                            initial="hidden"
+                            animate="visible"
+                            exit="exit"
+                            className='text-lg font-semibold mb-4'>Correspondence Person</motion.h1>
                         <motion.div
                             key="correspondence-person-tab"
                             className="bg-white border rounded-lg p-6"
@@ -1409,10 +1610,19 @@ const Certification = () => {
                                 </motion.button>
                             </div>
                         </motion.div>
+                        </>
                     )}
 
                     {/* Product Information Tab */}
                     {activeTab === 'application' && applicationSubTab === 'product' && (
+                        <>
+                        <motion.h1 
+                            key="product-info-tab-text"
+                            variants={agreementVariants}
+                            initial="hidden"
+                            animate="visible"
+                            exit="exit"
+                            className='text-lg font-semibold mb-4'>Product Information</motion.h1>
                         <motion.div
                             key="product-info-tab"
                             className="bg-white border rounded-lg p-6"
@@ -1502,6 +1712,8 @@ const Certification = () => {
                                 </motion.button>
                             </div>
                         </motion.div>
+                        
+                        </>
                     )}
 
                     {/* Service Listing Tab Content */}
@@ -2217,10 +2429,13 @@ const Certification = () => {
                             )}
                             {activeServiceSubTab === 'postAudit' && (
                                 <div className="bg-white border rounded-lg p-6">
-                                    <h3 className="text-xl font-medium mb-4 text-center">
+                                    <h3 className="text-xl font-medium mb-6 ">
                                         {declarationContent.postAudit.title}
                                     </h3>
                                     <div className="border rounded-lg p-6 max-h-[500px] overflow-y-auto mb-4">
+                                    <h3 className="text-2xl font-medium mb-8 ">
+                                        {declarationContent.postAudit.title}
+                                    </h3>
                                         <div className="space-y-4">
                                             {declarationContent.postAudit.paragraphs.map((item, index) => (
                                                 <div key={index}>
@@ -2267,10 +2482,13 @@ const Certification = () => {
                             )}
                             {activeServiceSubTab === 'supplierDeclaration' && (
                                 <div className="bg-white border rounded-lg p-6">
-                                    <h3 className="text-xl font-medium mb-4 text-center">
+                                    <h3 className="text-xl font-medium mb-6 ">
                                         {declarationContent.supplierDeclaration.title}
                                     </h3>
                                     <div className="border rounded-lg p-6 max-h-[500px] overflow-y-auto mb-4">
+                                    <h3 className="text-2xl font-medium mb-8 ">
+                                        {declarationContent.supplierDeclaration.title}
+                                    </h3>
                                         <div className="space-y-4">
                                             {declarationContent.supplierDeclaration.paragraphs.map((item, index) => (
                                                 <div key={index}>
@@ -2429,19 +2647,121 @@ const Certification = () => {
                             )}
                             {activeServiceSubTab === 'hotelService' && (
                                 <div className="bg-white border rounded-lg p-6">
-                                    <h3 className="text-xl font-medium mb-4">Star Hotels and Hospitality Service List</h3>
-                                    <p>Star Hotels and Hospitality Service List content goes here...</p>
+                                    <h3 className="text-xl font-medium mb-6">Star Hotels and Hospitality Service List</h3>
+                                    <div className="space-y-6">
+                                        {hotelServicesList.map((service, index) => (
+                                            <div key={service.id} className="relative border rounded-lg p-4">
+                                                {/* Service Name and Description Section (Grid Layout) */}
+                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2 mb-4"> {/* Changed gap-y */}
+                                                    {/* Service Name Column */}
+                                                    <div>
+                                                        <label className="block text-sm font-medium text-gray-700 mb-1">Service Name</label>
+                                                        {service.isDefault ? (
+                                                            <p className="text-md font-medium text-gray-800 p-2 border border-transparent min-h-[42px] flex items-center">{service.serviceName}</p> // Display as text, added min-height and flex align
+                                                        ) : (
+                                                            <input // Display as input
+                                                                type="text"
+                                                                value={service.serviceName}
+                                                                onChange={(e) => handleHotelServiceChange(service.id, 'serviceName', e.target.value)}
+                                                                className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                                placeholder="Enter service name"
+                                                            />
+                                                        )}
+                                                    </div>
+                                                    {/* Description Column */}
+                                                    <div>
+                                                        <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                                                         {service.isDefault ? (
+                                                            <p className="text-sm text-gray-600 p-2 border border-transparent min-h-[42px] flex items-center">{service.description}</p> // Display as text, added min-height and flex align
+                                                        ) : (
+                                                            <textarea // Display as textarea
+                                                                value={service.description}
+                                                                onChange={(e) => handleHotelServiceChange(service.id, 'description', e.target.value)}
+                                                                className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                                rows={1} // Start with 1 row, textareas naturally expand
+                                                                placeholder="Enter service description"
+                                                            />
+                                                        )}
+                                                    </div>
+                                                </div>
+
+                                                {/* Status, Manager Name, Manager Number Section */}
+                                                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                                    {/* Status Dropdown */}
+                                                    <div>
+                                                        <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                                                        <select
+                                                            value={service.status}
+                                                            onChange={(e) => handleHotelServiceChange(service.id, 'status', e.target.value)}
+                                                            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                                            <option value="">Select</option>
+                                                            <option value="Provided by hotel administration">Provided by hotel administration</option>
+                                                            <option value="Provided by third party">Provided by third party</option>
+                                                            <option value="Not Applicable">Not Applicable</option>
+                                                            {/* Add other relevant status options */}
+                                                        </select>
+                                                    </div>
+
+                                                    {/* Manager/Provider/POC Name */}
+                                                    <div>
+                                                        <label className="block text-sm font-medium text-gray-700 mb-1">Manager/Provider/POC Name</label>
+                                                        <input
+                                                            type="text"
+                                                            value={service.managerName}
+                                                            onChange={(e) => handleHotelServiceChange(service.id, 'managerName', e.target.value)}
+                                                            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                            placeholder="Enter name"
+                                                        />
+                                                    </div>
+
+                                                    {/* Manager/Provider/POC Number */}
+                                                    <div>
+                                                        <label className="block text-sm font-medium text-gray-700 mb-1">Manager/Provider/POC Number</label>
+                                                        <input
+                                                            type="text"
+                                                            value={service.managerNumber}
+                                                            onChange={(e) => handleHotelServiceChange(service.id, 'managerNumber', e.target.value)}
+                                                            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                            placeholder="Enter number"
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                {/* Conditional Remove Button */}
+                                                {!service.isDefault && ( // Only show delete for non-default rows
+                                                    <button
+                                                        onClick={() => handleRemoveHotelServiceRow(service.id)}
+                                                        className="absolute top-4 right-4 text-red-500 hover:text-red-700">
+                                                        <BiTrash size={20} />
+                                                    </button>
+                                                )}
+                                            </div>
+                                        ))}
+
+                                        <button
+                                            onClick={handleAddHotelServiceRow}
+                                            className="flex items-center text-blue-500 hover:text-blue-700">
+                                            <BiPlus size={20} className="mr-1" /> Add row
+                                        </button>
+                                    </div>
+
                                     <div className="flex justify-end space-x-4 mt-8">
                                         <motion.button
                                             whileHover={{ scale: 1.05 }}
                                             whileTap={{ scale: 0.95 }}
-                                            className="px-6 py-2 border border-gray-300 rounded">
+                                            className="px-6 py-2 border border-gray-300 rounded"
+                                            // Add onClick handler for Back, e.g., handleServiceSubTabChange('menuList')
+                                            onClick={() => handleServiceSubTabChange('menuList')}
+                                            >
                                             Back
                                         </motion.button>
                                         <motion.button
                                             whileHover={{ scale: 1.05 }}
                                             whileTap={{ scale: 0.95 }}
-                                            className="px-6 py-2 rounded text-white bg-custom-primary">
+                                            className="px-6 py-2 rounded text-white bg-custom-primary"
+                                             // Add onClick handler for Submit, e.g., handleServiceSubTabChange('healthService') or submit data
+                                             onClick={() => handleServiceSubTabChange('healthService')}
+                                            >
                                             Submit & Continue
                                         </motion.button>
                                     </div>
@@ -2449,19 +2769,89 @@ const Certification = () => {
                             )}
                             {activeServiceSubTab === 'healthService' && (
                                 <div className="bg-white border rounded-lg p-6">
-                                    <h3 className="text-xl font-medium mb-4">Hospital and Health Care Service List</h3>
-                                    <p>Hospital and Health Care Service List content goes here...</p>
+                                    <h3 className="text-xl font-medium mb-6">Hospital and Health Care Service List</h3>
+                                    <div className="space-y-6">
+                                        {healthServicesList.map((service, index) => (
+                                            <div key={service.id} className="relative border rounded-lg p-4">
+                                                {/* Service Name, Description, and Status Section (Grid Layout) */}
+                                                <div className="grid grid-cols-1 md:grid-cols-3 gap-x-4 gap-y-2 items-start"> {/* Use items-start for alignment */}
+                                                    {/* Service Name & Description Column (Span 2 cols on md) */}
+                                                    <div className="md:col-span-2">
+                                                        <label className="block text-sm font-medium text-gray-700 mb-1">Service</label>
+                                                        {service.isDefault ? (
+                                                            <div>
+                                                                <p className="text-md font-semibold text-gray-800">{service.serviceName}</p>
+                                                                <p className="text-sm text-gray-600 mt-1">{service.description}</p>
+                                                            </div>
+                                                        ) : (
+                                                            <div className="space-y-2">
+                                                                <input // Service Name Input for new rows
+                                                                    type="text"
+                                                                    value={service.serviceName}
+                                                                    onChange={(e) => handleHealthServiceChange(service.id, 'serviceName', e.target.value)}
+                                                                    className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                                    placeholder="Enter service name"
+                                                                />
+                                                                <textarea // Description Textarea for new rows
+                                                                    value={service.description}
+                                                                    onChange={(e) => handleHealthServiceChange(service.id, 'description', e.target.value)}
+                                                                    className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                                    rows={2}
+                                                                    placeholder="Enter service description"
+                                                                />
+                                                            </div>
+                                                        )}
+                                                    </div>
+
+                                                    {/* Status Column */}
+                                                    <div>
+                                                        <label className="block text-sm font-medium text-gray-700 mb-1">Status</label>
+                                                        <select
+                                                            value={service.status}
+                                                            onChange={(e) => handleHealthServiceChange(service.id, 'status', e.target.value)}
+                                                            className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                                            <option value="">Select</option>
+                                                            <option value="Provided by hospital administration">Provided by hospital administration</option>
+                                                            <option value="Provided by third party">Provided by third party</option>
+                                                            <option value="Not Applicable">Not Applicable</option>
+                                                            {/* Add other relevant status options specific to healthcare */}
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                {/* Conditional Remove Button */}
+                                                {!service.isDefault && ( // Only show delete for non-default rows
+                                                    <button
+                                                        onClick={() => handleRemoveHealthServiceRow(service.id)}
+                                                        className="absolute top-4 right-4 text-red-500 hover:text-red-700">
+                                                        <BiTrash size={20} />
+                                                    </button>
+                                                )}
+                                            </div>
+                                        ))}
+
+                                        <button
+                                            onClick={handleAddHealthServiceRow}
+                                            className="flex items-center text-blue-500 hover:text-blue-700">
+                                            <BiPlus size={20} className="mr-1" /> Add row
+                                        </button>
+                                    </div>
+
                                     <div className="flex justify-end space-x-4 mt-8">
                                         <motion.button
                                             whileHover={{ scale: 1.05 }}
                                             whileTap={{ scale: 0.95 }}
-                                            className="px-6 py-2 border border-gray-300 rounded">
+                                            className="px-6 py-2 border border-gray-300 rounded"
+                                            onClick={() => handleServiceSubTabChange('hotelService')} // Go back to Hotel Service
+                                            >
                                             Back
                                         </motion.button>
                                         <motion.button
                                             whileHover={{ scale: 1.05 }}
                                             whileTap={{ scale: 0.95 }}
-                                            className="px-6 py-2 rounded text-white bg-custom-primary">
+                                            className="px-6 py-2 rounded text-white bg-custom-primary"
+                                            onClick={() => handleServiceSubTabChange('meatProcurement')} // Go to Meat Procurement
+                                            >
                                             Submit & Continue
                                         </motion.button>
                                     </div>
@@ -2469,19 +2859,139 @@ const Certification = () => {
                             )}
                             {activeServiceSubTab === 'meatProcurement' && (
                                 <div className="bg-white border rounded-lg p-6">
-                                    <h3 className="text-xl font-medium mb-4">Meat Procurement List</h3>
-                                    <p>Meat Procurement List content goes here...</p>
+                                    <h3 className="text-xl font-medium mb-6">Meat Procurement List</h3>
+                                    <div className="space-y-8"> {/* Increased spacing between rows */}
+                                        {meatProcurementList.map((item, index) => (
+                                            <div key={item.id} className="relative border rounded-lg p-4 pt-8"> {/* Added padding top for SL No */}
+                                                {/* SL No */}
+                                                <span className="absolute top-2 left-4 text-lg  font-medium ">SL No {String(index + 1).padStart(2, '0')}</span>
+
+                                                {/* Grid for form fields */}
+                                                <div className="grid grid-cols-1 mt-4 md:grid-cols-3 gap-4">
+                                                    {/* Column 1 */}
+                                                    <div className="space-y-4">
+                                                        <div>
+                                                            <label className="block text-sm font-medium text-gray-700 mb-1">Particular</label>
+                                                            <input
+                                                                type="text"
+                                                                value={item.particular}
+                                                                onChange={(e) => handleMeatProcurementChange(item.id, 'particular', e.target.value)}
+                                                                className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                                placeholder="Enter particular"
+                                                            />
+                                                        </div>
+                                                        <div>
+                                                            <label className="block text-sm font-medium text-gray-700 mb-1">QTY (Kgs/per day)</label>
+                                                            <input
+                                                                type="text"
+                                                                value={item.quantity}
+                                                                onChange={(e) => handleMeatProcurementChange(item.id, 'quantity', e.target.value)}
+                                                                className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                                placeholder="e.g., 30 kgs"
+                                                            />
+                                                        </div>
+                                                        <div>
+                                                            <label className="block text-sm font-medium text-gray-700 mb-1">POC Contact Number</label>
+                                                            <input
+                                                                type="text"
+                                                                value={item.pocContact}
+                                                                onChange={(e) => handleMeatProcurementChange(item.id, 'pocContact', e.target.value)}
+                                                                className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                                placeholder="Enter contact number"
+                                                            />
+                                                        </div>
+                                                    </div>
+
+                                                    {/* Column 2 */}
+                                                    <div className="space-y-4">
+                                                        <div>
+                                                            <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
+                                                            <select
+                                                                value={item.category}
+                                                                onChange={(e) => handleMeatProcurementChange(item.id, 'category', e.target.value)}
+                                                                className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                                                <option value="">Select category</option>
+                                                                <option value="Deli Meats (e.g., ham, turkey, roast...)">Deli Meats (e.g., ham, turkey, roast...)</option>
+                                                                <option value="Poultry">Poultry</option>
+                                                                <option value="Beef">Beef</option>
+                                                                <option value="Lamb/Mutton">Lamb/Mutton</option>
+                                                                <option value="Seafood">Seafood</option>
+                                                                {/* Add more categories */}
+                                                            </select>
+                                                        </div>
+                                                        <div>
+                                                            <label className="block text-sm font-medium text-gray-700 mb-1">Supplier Name</label>
+                                                            <input
+                                                                type="text"
+                                                                value={item.supplierName}
+                                                                onChange={(e) => handleMeatProcurementChange(item.id, 'supplierName', e.target.value)}
+                                                                className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                                placeholder="Enter supplier name"
+                                                            />
+                                                        </div>
+                                                    </div>
+
+                                                    {/* Column 3 */}
+                                                    <div className="space-y-4">
+                                                        <div>
+                                                            <label className="block text-sm font-medium text-gray-700 mb-1">Sub-Category</label>
+                                                            <select
+                                                                value={item.subCategory}
+                                                                onChange={(e) => handleMeatProcurementChange(item.id, 'subCategory', e.target.value)}
+                                                                className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                                                <option value="">Select sub-category</option>
+                                                                <option value="Fresh farm">Fresh farm</option>
+                                                                <option value="Frozen">Frozen</option>
+                                                                <option value="Imported">Imported</option>
+                                                                <option value="Local">Local</option>
+                                                                 {/* Add more sub-categories */}
+                                                            </select>
+                                                        </div>
+                                                         <div>
+                                                            <label className="block text-sm font-medium text-gray-700 mb-1">POC Name</label>
+                                                            <input
+                                                                type="text"
+                                                                value={item.pocName}
+                                                                onChange={(e) => handleMeatProcurementChange(item.id, 'pocName', e.target.value)}
+                                                                className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                                placeholder="Enter POC name"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                {/* Remove Button */}
+                                                <button
+                                                    onClick={() => handleRemoveMeatProcurementRow(item.id)}
+                                                    className="absolute top-4 right-4 text-red-500 hover:text-red-700">
+                                                    <BiTrash size={20} />
+                                                </button>
+                                            </div>
+                                        ))}
+
+                                        <button
+                                            onClick={handleAddMeatProcurementRow}
+                                            className="flex items-center text-blue-500 hover:text-blue-700 mt-6"> {/* Added margin top */}
+                                            <BiPlus size={20} className="mr-1" /> Add row
+                                        </button>
+                                    </div>
+
                                     <div className="flex justify-end space-x-4 mt-8">
                                         <motion.button
                                             whileHover={{ scale: 1.05 }}
                                             whileTap={{ scale: 0.95 }}
-                                            className="px-6 py-2 border border-gray-300 rounded">
+                                            className="px-6 py-2 border border-gray-300 rounded"
+                                            onClick={() => handleServiceSubTabChange('healthService')} // Go back to Health Service
+                                        >
                                             Back
                                         </motion.button>
                                         <motion.button
                                             whileHover={{ scale: 1.05 }}
                                             whileTap={{ scale: 0.95 }}
-                                            className="px-6 py-2 rounded text-white bg-custom-primary">
+                                            className="px-6 py-2 rounded text-white bg-custom-primary"
+                                            // Add final submit logic or navigation if this is the last tab
+                                            onClick={() => console.log('Submit Meat Procurement:', meatProcurementList)}
+                                        >
                                             Submit & Continue
                                         </motion.button>
                                     </div>
