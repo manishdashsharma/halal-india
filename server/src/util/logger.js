@@ -1,5 +1,5 @@
 import util from 'util';
-import 'winston-mongodb';
+// import 'winston-mongodb';
 import { createLogger, format, transports } from 'winston';
 import config from '../config/config.js';
 import { EApplicationEnvironment } from '../constant/application.js';
@@ -108,5 +108,5 @@ export default createLogger({
     defaultMeta: {
         meta: {},
     },
-    transports: [...fileTransport(), ...mongodbTransport(), ...consoleTransport()],
+    transports: [...fileTransport(), ...consoleTransport()],
 });

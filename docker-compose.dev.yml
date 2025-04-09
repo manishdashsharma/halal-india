@@ -1,16 +1,15 @@
 version: '3.9'
 
 services:
-  mongo:
-    container_name: mongo_container
-    image: 'mongo'
+  postgres:
+    container_name: postgres_container
+    image: 'postgres:16'
     volumes:
-      - mongo-data:/data/db
+      - postgres-data:/var/lib/postgresql/data
     networks:
       - queue-net
     env_file: 
       - ./.env.development
-    command: mongod --bind_ip_all
     restart: always
 
   client:
@@ -38,8 +37,9 @@ services:
       dockerfile: docker/development/Dockerfile
     ports:
       - '5000:5000'
+      - '5555:5555'
     depends_on:
-      - mongo
+      - postgres
     env_file: 
       - ./.env.development
     volumes:
@@ -54,4 +54,4 @@ networks:
     driver: bridge
 
 volumes:
-  mongo-data:
+  postgres-data:

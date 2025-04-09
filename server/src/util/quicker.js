@@ -1,5 +1,6 @@
 import os from 'os';
 import config from '../config/config.js';
+import jwt from 'jsonwebtoken';
 
 export default {
     getSystemHealth: () => {
@@ -19,4 +20,12 @@ export default {
             },
         };
     },
+    generateToken: (payload, secret, expiry) => {
+        return jwt.sign(payload, secret, {
+            expiresIn: expiry
+        });
+    },
+    verifyToken: (token, secret) => {
+        return jwt.verify(token, secret);
+    }
 };

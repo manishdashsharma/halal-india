@@ -1,6 +1,6 @@
 PROJECT_NAME=${1:-"myproject"}
 IMAGE_PREFIX="$PROJECT_NAME"
-MONGO_VOLUME="${PROJECT_NAME}_mongo-data"
+POSTGRES_VOLUME="${PROJECT_NAME}_postgres-data"
 NETWORK_NAME="${PROJECT_NAME}-net"
 
 check_env_files() {
@@ -32,14 +32,14 @@ cleanup() {
     echo "Starting cleanup process for $PROJECT_NAME ($env environment)..."
 
     # Stop and remove containers
-    docker stop mongo_container client server >/dev/null 2>&1
-    docker rm mongo_container client server >/dev/null 2>&1
+    docker postgres_container client server >/dev/null 2>&1
+    docker rm postgres_container client server >/dev/null 2>&1
 
     # Remove images
     docker rmi $(docker images -q --filter "reference=${IMAGE_PREFIX}*") >/dev/null 2>&1
 
     # Remove volume and network
-    docker volume rm $MONGO_VOLUME >/dev/null 2>&1
+    docker volume rm $POSTGRES_VOLUME >/dev/null 2>&1
     docker network rm $NETWORK_NAME >/dev/null 2>&1
 
     echo "Cleanup complete."

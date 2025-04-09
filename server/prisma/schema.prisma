@@ -1,0 +1,134 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model Client {
+  id        String @id @unique @default(uuid())
+  email     String? @unique
+  phone     Int? @unique
+  name      String
+  password  String
+  clientCompanyDetails ClientCompanyDetails?
+  clientHalalCirtification  ClientHalalCertificationApplication?
+  ndaSign   Boolean @default(false)
+  logoAgreement Boolean @default(false)
+}
+
+
+model ClientCompanyDetails {
+  id                            String @id @default(uuid())
+  clientId                      String @unique
+  name                          String
+  position                      String
+  companyName                   String
+  companyOfficialNumber         String
+  companyEmail                  String
+  companyWebsiteUrl             String
+  companyAddress                String
+  companyPan                    String
+
+  companyLogoUrl                String  
+  incorporationCertificateUrl   String
+  moaDocumentUrl                String
+  authorizedSignatorySealUrl    String
+  companyRoundSealUrl           String
+  fssaiCertificateUrl           String
+
+  client                        Client @relation(fields: [clientId], references: [id])
+  director                      ClientCompanyDirector?
+
+  createdAt                     DateTime @default(now())
+  updatedAt                     DateTime @updatedAt
+}
+
+
+model ClientCompanyDirector {
+  id                 String   @id @default(uuid())
+  companyId          String   @unique
+  name               String
+  phoneNumber        String
+  pan                String
+  email              String
+
+  panCardUrl         String  
+  idProofUrl         String   
+  signatureUrl       String   
+  company            ClientCompanyDetails @relation(fields: [companyId], references: [id])
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+
+model ClientHalalCertificationApplication {
+  id                     String        @id @default(uuid())
+  clientId               String         @unique
+  applicationDate        DateTime
+  businessName           String
+  businessType           String
+  address                String
+  country                String
+  state                  String
+  city                   String
+  zipCode                String
+  contactNumber          String
+  email                  String
+
+  client                  Client @relation(fields: [clientId], references: [id])
+  manufacturingPlant     ClientManufacturingPlant?
+  correspondencePerson   ClientCorrespondencePerson?
+  productInformation     ClientProductInformation?
+
+  createdAt              DateTime             @default(now())
+  updatedAt              DateTime             @updatedAt
+}
+
+model ClientManufacturingPlant {
+  id                         String   @id @default(uuid())
+  applicationId              String   @unique
+  plantName                  String
+  ownershipType              String
+  address                    String
+  country                    String
+  state                      String
+  city                       String
+  zipCode                    String
+  typesOfProduct             String[]
+  contractorType             String?
+  contractManufacturerType   String?
+  otherDetails               String?
+
+  application                ClientHalalCertificationApplication @relation(fields: [applicationId], references: [id])
+}
+
+model ClientCorrespondencePerson {
+  id              String   @id @default(uuid())
+  applicationId   String   @unique
+  name            String
+  designation     String
+  contactNumber   String
+  email           String
+
+  application     ClientHalalCertificationApplication @relation(fields: [applicationId], references: [id])
+}
+
+model ClientProductInformation {
+  id                           String   @id @default(uuid())
+  applicationId                String   @unique
+  isHalalCertified             Boolean
+  modeOfProduction             String
+  productGroup                 String
+  brandName                    String
+  productName                  String
+  description                  String?
+
+  application                  ClientHalalCertificationApplication @relation(fields: [applicationId], references: [id])
+}
+
+
+
