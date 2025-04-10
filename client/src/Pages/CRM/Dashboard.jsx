@@ -4,10 +4,9 @@ import Sidebar from '../../components/layout/Sidebar'
 import { Outlet, useLocation } from 'react-router-dom'
 import { useSetRecoilState } from 'recoil'
 import { activeSidebarItemState } from '../../state/atom'
-import { clientPortalConfig } from '../../configs/sidebar.Config'
+import { crmConfig } from '../../configs/sidebar.Config'
 
-
-const Dashboard = () => {
+const CRMDashboard = () => {
     const location = useLocation()
     const setActiveItem = useSetRecoilState(activeSidebarItemState)
 
@@ -18,7 +17,7 @@ const Dashboard = () => {
         } else {
             // Set according to current path
             const currentPath = window.location.pathname
-            const matchingItem = clientPortalConfig.menuItems.find((item) => 
+            const matchingItem = crmConfig.menuItems.find((item) => 
                 currentPath.endsWith(item.path)
             )
             if (matchingItem) {
@@ -31,11 +30,11 @@ const Dashboard = () => {
     }, [location, setActiveItem])
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-blue-50">
             <Navbar />
             <Sidebar 
-                menuItems={clientPortalConfig.menuItems}
-                basePath={clientPortalConfig.basePath}
+                menuItems={crmConfig.menuItems}
+                basePath={crmConfig.basePath}
             />
             <div className="ml-[250px] max-lg:ml-0 pt-20 p-6">
                 <Outlet />
@@ -44,5 +43,4 @@ const Dashboard = () => {
     )
 }
 
-export default Dashboard
-
+export default CRMDashboard 

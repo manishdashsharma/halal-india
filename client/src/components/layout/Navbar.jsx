@@ -4,27 +4,23 @@ import defaultUser from '../../assets/user.png'
 import { IoMenu } from 'react-icons/io5';
 import { RxCross2 } from 'react-icons/rx';
 import { IoSearch } from 'react-icons/io5';
+import { useRecoilState } from 'recoil';
+import { isMobileMenuOpenState } from '../../state/atom';
 
-
-
-const Navbar = ({ onMenuToggle }) => {
-    const [isMenuOpen, setIsMenuOpen] = useState(false)
+const Navbar = () => {
+    // Use Recoil for mobile menu state
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useRecoilState(isMobileMenuOpenState);
+    
     const [isProfileOpen, setIsProfileOpen] = useState(false)
     const profileRef = useRef(null)
 
     const toggleMenu = () => {
-        setIsMenuOpen(!isMenuOpen)
+        setIsMobileMenuOpen(!isMobileMenuOpen)
     }
 
     const toggleProfile = () => {
         setIsProfileOpen(!isProfileOpen)
     }
-
-    useEffect(() => {
-        if (onMenuToggle) {
-            onMenuToggle(isMenuOpen)
-        }
-    }, [isMenuOpen, onMenuToggle])
 
     // Close profile menu when clicking outside
     useEffect(() => {
@@ -47,7 +43,7 @@ const Navbar = ({ onMenuToggle }) => {
                         className="lg:hidden text-neutral4 text-3xl"
                         onClick={toggleMenu}>
                             {
-                                isMenuOpen ? <RxCross2 /> : <IoMenu />
+                                isMobileMenuOpen ? <RxCross2 /> : <IoMenu />
                             }
                      
                     </button>
@@ -91,7 +87,7 @@ const Navbar = ({ onMenuToggle }) => {
                             </div>
                             <img
                                 src={defaultUser}
-                                alt={defaultUser}
+                                alt="User"
                                 className="h-10 w-10 rounded-full object-cover"
                             />
                         </div>
