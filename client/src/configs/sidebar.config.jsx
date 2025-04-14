@@ -23,7 +23,7 @@ export const crmConfig = {
     { icon: <MdDashboard />, label: 'Dashboard', path: '/dashboard' },
     { icon: <IoNotificationsOutline />, label: 'Notification', path: '/notification' },
     { icon: <BiMessageSquareDots />, label: 'Inbox', path: '/inbox' },
-    { icon: <FiFile />, label: 'Leads', path: '/leads' },
+    { icon: <FiFile />, label: 'Leads', path: '/leads' , action:'crmLeadPage' },
 
   ]
 };

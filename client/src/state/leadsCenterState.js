@@ -63,3 +63,13 @@ export const leadCenterCountsState = atom({
         allocatedApproved: 0,
     },
 });
+
+
+export const userApprovalDashboardState = atom({
+  key:'userApprovalDashboardState',
+  default: {
+    open:false,
+    lead:null,
+    approvedTab:false
+  }
+})

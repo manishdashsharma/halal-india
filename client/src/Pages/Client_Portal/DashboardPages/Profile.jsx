@@ -4,7 +4,7 @@ import { Card } from '../../../components/ui/card'
 import { FiPlus, FiX, FiEdit, FiTrash2, FiUsers, FiFile } from 'react-icons/fi'
 import { AiOutlineFileImage, AiOutlineFilePdf, AiOutlineFileJpg } from 'react-icons/ai'
 import { useNavigate } from 'react-router-dom'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence } from 'motion/react'
 import toast from 'react-hot-toast'
 
 const Profile = () => {

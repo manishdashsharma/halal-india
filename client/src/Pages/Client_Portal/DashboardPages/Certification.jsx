@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence } from 'motion/react'
 import { BiDownload, BiTrash, BiPlus } from 'react-icons/bi'
 import { PDFDownloadLink, Document, Page, Text, StyleSheet, View } from '@react-pdf/renderer'
 import { useNavigate } from 'react-router-dom'

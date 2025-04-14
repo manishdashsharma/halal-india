@@ -4,6 +4,8 @@ import { FaUserCircle, FaBuilding, FaUtensils, FaCapsules, FaEnvelope, FaExterna
 import { IoKeyOutline } from 'react-icons/io5';
 import noleads from '../../../assets/noleads.svg'
 import GenerateCredentialsModal from '../../layout/GenerateCredentialsModal';
+import { userApprovalDashboardState } from '../../../state/leadsCenterState';
+import { useSetRecoilState } from 'recoil';
 
 const DataTable = ({ columns, data, isLoading, error, RowComponent, EmptyStateComponent }) => {
     
@@ -32,6 +34,16 @@ export const LeadDataRow = ({ item }) => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedLead, setSelectedLead] = useState(null);
+
+    const setUserApprovalDashboard = useSetRecoilState(userApprovalDashboardState);
+    
+    const handleViewApprovalDashboard = (lead) => {
+        setUserApprovalDashboard({
+            open: true,
+            lead: lead
+        });
+    };
+    
 
     const handleOpenModal = (lead) => {
         setSelectedLead(lead);
@@ -94,7 +106,7 @@ export const LeadDataRow = ({ item }) => {
                  </button>
                 { item.type === 'New Lead' ? <button className="py-1.5 px-3 border border-gray-300 bg-white text-gray-700 rounded-md text-sm ml-2 hover:bg-gray-50 inline-flex items-center" onClick={() => handleOpenModal(item)}>
                       <FaKey   className="mr-1.5"/> Generate Credentials
-                 </button> :  <button className="py-1.5 px-3 border border-gray-300 bg-white text-gray-700 rounded-md text-sm ml-2 hover:bg-gray-50 inline-flex items-center" >
+                 </button> :  <button className="py-1.5 px-3 border border-gray-300 bg-white text-gray-700 rounded-md text-sm ml-2 hover:bg-gray-50 inline-flex items-center" onClick={()=>handleViewApprovalDashboard(item)} >
                       < FaExternalLinkAlt  className="mr-1.5"/> Go to dashboard
                  </button>
 
@@ -124,6 +136,16 @@ export const ApprovedDataRow = ({ item }) => {
     const handleAllocateApp = (id) => console.log('Allocate App:', id);
     const handleGoToDashboard = (id) => console.log('Go To App Dashboard:', id);
 
+    const setUserApprovalDashboard = useSetRecoilState(userApprovalDashboardState);
+    
+    const handleViewApprovalDashboard = (lead) => {
+        setUserApprovalDashboard({
+            open: true,
+            lead: lead,
+            approvedTab:true
+        });
+    };
+
      const statusClasses = 'text-green-800 bg-green-100'; // Approved are usually completed
 
     return (
@@ -143,8 +165,8 @@ export const ApprovedDataRow = ({ item }) => {
                   <button className="py-1.5 px-3 border border-gray-300 bg-white text-gray-700 rounded-md text-sm ml-2 hover:bg-gray-50 inline-flex items-center" onClick={() => handleSendMail(item.id)}>
                      <FaRegUser   className="mr-1.5"/> Allocated Member
                  </button>
-                 <button className="py-1.5 px-3 border border-gray-300 bg-white text-gray-700 rounded-md text-sm ml-2 hover:bg-gray-50 inline-flex items-center" onClick={() => handleGoToDashboard(item.id)}>
-                      <FaExternalLinkAlt  className="mr-1.5"/> Go to dashboard
+                 <button className="py-1.5 px-3 border border-gray-300 bg-white text-gray-700 rounded-md text-sm ml-2 hover:bg-gray-50 inline-flex items-center" onClick={()=>handleViewApprovalDashboard(item)} >
+                      < FaExternalLinkAlt  className="mr-1.5"/> Go to dashboard
                  </button>
              </td>
         </tr>

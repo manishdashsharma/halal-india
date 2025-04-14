@@ -1,22 +1,33 @@
-import React from 'react';
+import React, { act } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { activeSidebarItemState, isMobileMenuOpenState } from '../../state/atom';
+import { userApprovalDashboardState } from '@/state/leadsCenterState';
 
 const AnimatedLink = motion(Link);
 
-const Sidebar = ({ menuItems, basePath }) => {
+const Sidebar = ({ menuItems, basePath  }) => {
   // Get the current active item from Recoil
   const activeItem = useRecoilValue(activeSidebarItemState);
   // Get the setter for the active item
   const setActiveItem = useSetRecoilState(activeSidebarItemState);
   // Get the mobile menu state
   const isMobileMenuOpen = useRecoilValue(isMobileMenuOpenState);
+  const setUserApprovalDashboard = useSetRecoilState(userApprovalDashboardState)
 
-  const handleItemClick = (path) => {
-    setActiveItem(path);
+
+  const handleItemClick = (item) => {
+    setActiveItem(item.path);
+    if(item.action == 'crmLeadPage'){
+      console.log('chala')
+      setUserApprovalDashboard({
+        open: false,
+        lead: null
+    })
+    }
   };
+
 
   return (
     <div
@@ -30,7 +41,10 @@ const Sidebar = ({ menuItems, basePath }) => {
             whileTap={{ scale: 0.95 }}
             key={index}
             to={`${basePath}${item.path}`}
-            onClick={() => handleItemClick(item.path)}
+            onClick={() => {
+              handleItemClick(item)
+              
+            }}
             className={`flex items-center gap-3 px-4 py-3 rounded-md mb-1 ${
               activeItem === item.path || window.location.pathname.includes(item.path)
                 ? 'bg-custom-primary text-white'

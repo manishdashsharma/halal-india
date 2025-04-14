@@ -11,6 +11,7 @@ import {
   leadCenterFilterState,
   leadCenterDataViewState,
   leadCenterCountsState,
+  userApprovalDashboardState,
 } from '../../state/leadsCenterState';
 import { fetchLeadCenterData } from '../../api/leadsCenterApi';
 
@@ -18,6 +19,7 @@ import MainTabs from './LeadsCenterMainTab';
 import LeadsView from './subTabs/LeadsView';
 import ApprovedView from './subTabs/ApprovedView';
 import AllocatedView from './subTabs/AllocatedView'; // Import AllocatedView
+import ApprovalDashboard from '../ApprovalDashboard/ApprovalDashboard';
 
 const LeadCenterComponent = () => {
   const mainTab = useRecoilValue(leadCenterMainTabState);
@@ -30,6 +32,7 @@ const LeadCenterComponent = () => {
 
   const setDataView = useSetRecoilState(leadCenterDataViewState);
   const setCounts = useSetRecoilState(leadCenterCountsState);
+  const {open , lead} = useRecoilValue(userApprovalDashboardState)
 
   // *** UPDATED useCallback dependencies ***
   const fetchData = useCallback(async () => {
@@ -79,10 +82,18 @@ const LeadCenterComponent = () => {
     }
   };
 
+  if(open){
+    return (
+      <div className=" ">
+        <ApprovalDashboard lead={lead} />
+      </div>
+    )
+  }
+
   return (
     <div className="p-6 bg-white rounded-lg shadow">
       <h1 className="text-2xl font-semibold mb-4 text-gray-800">Lead Center</h1>
-      <MainTabs />
+       <MainTabs />
       <div className="mt-4">{renderContentView()}</div> {/* Added margin top */}
     </div>
   );
