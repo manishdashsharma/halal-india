@@ -646,30 +646,32 @@ const Certification = () => {
     }
 
     return (
-        <div className="space-y-6">
-            <h1 className="text-2xl font-medium">Certification</h1>
+        <>
+        
+            <h1 className="text-2xl font-medium mb-5">Certification</h1>
+        <div className="space-y-6 bg-white p-5 rounded-lg shadow-sm">
 
             {/* Tabs */}
-            <div className="border-b">
+            <div className="border-b ">
                 <div className="flex space-x-8 relative">
                     {['agreements', 'application', 'service'].map((tab) => (
                         <motion.button
                             key={tab}
                             onClick={() => handleTabChange(tab)}
-                            className={`pb-2  font-medium relative ${activeTab === tab ? 'text-blue-500' : 'text-gray-600'}`}
+                            className={`pb-2  font-medium relative ${activeTab === tab ? 'text-blue-500 border-b-2 border-blue-500' : 'text-gray-600'}`}
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.95 }}>
                             {tab === 'agreements' && 'Agreements & NDAs'}
                             {tab === 'application' && 'Halal certification application form'}
                             {tab === 'service' && 'Service Listing'}
-                            {activeTab === tab && (
+                            {/* {activeTab === tab && (
                                 <motion.div
                                     className="absolute  bottom-0 left-0 right-0 h-0.5 bg-blue-500"
                                     layoutId="tabIndicator"
                                     initial={false}
                                     transition={{ type: 'spring', stiffness: 500, damping: 30 }}
                                 />
-                            )}
+                            )} */}
                         </motion.button>
                     ))}
                 </div>
@@ -3002,6 +3004,7 @@ const Certification = () => {
                 </AnimatePresence>
             </div>
         </div>
+        </>
     )
 }
 

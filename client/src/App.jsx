@@ -7,6 +7,9 @@ import DashboardHome from './Pages/Client_Portal/DashboardPages/DashboardHomepag
 import Certification from './Pages/Client_Portal/DashboardPages/Certification';
 import LeadsDashboard from './components/LeadsDashboard';
 import LeadCenter from './components/leads_Center/LeadsCenter';
+import RNDLeadsDashboard from './Pages/RND_pre_audit/RNDLeadsDashboard';
+import RNDPreAuditDashboard from './Pages/RND_pre_audit/Dashboard';
+import RNDLeadCenter from './Pages/RND_pre_audit/RNDLeadCenter';
 
 // CRM Pages (placeholder components)
 const CRMHome = () => <div>CRM Dashboard</div>;
@@ -33,6 +36,15 @@ const App = () => {
         <Route path="notification" element={<div>Notifications</div>} />
         <Route path="inbox" element={<div>Inbox</div>} />
         <Route path="leads" element={<LeadCenter/>}/>
+       
+      </Route>
+
+      {/* RND-pre-audit Routes */}
+      <Route path="RND-pre-audit" element={<RNDPreAuditDashboard />}>
+        <Route path="dashboard" element={<RNDLeadsDashboard departmentId='RND-pre-audit' />} />
+        <Route path="notification" element={<div>Notifications</div>} />
+        <Route path="inbox" element={<div>Inbox</div>} />
+        <Route path="leads" element={<RNDLeadCenter/>}/>
        
       </Route>
     </Routes>

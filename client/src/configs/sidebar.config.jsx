@@ -27,4 +27,15 @@ export const crmConfig = {
 
   ]
 };
+// RNDpreaudit Sidebar Configuration
+export const rndPreAuditConfig = {
+  basePath: '/RND-pre-audit',
+  menuItems: [
+    { icon: <MdDashboard />, label: 'Dashboard', path: '/dashboard' },
+    { icon: <IoNotificationsOutline />, label: 'Notification', path: '/notification' },
+    { icon: <BiMessageSquareDots />, label: 'Inbox', path: '/inbox' },
+    { icon: <FiFile />, label: 'Leads', path: '/leads' , action:'rndPreAuditLeadPage' },
+
+  ]
+};
 

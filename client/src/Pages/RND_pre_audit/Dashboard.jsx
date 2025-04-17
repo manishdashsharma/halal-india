@@ -4,10 +4,9 @@ import Sidebar from '../../components/layout/Sidebar'
 import { Outlet, useLocation } from 'react-router-dom'
 import { useSetRecoilState } from 'recoil'
 import { activeSidebarItemState } from '../../state/atom'
-import { clientPortalConfig } from '../../configs/sidebar.Config'
+import { rndPreAuditConfig } from '@/configs/sidebar.config'
 
-
-const Dashboard = () => {
+const RNDPreAuditDashboard = () => {
     const location = useLocation()
     const setActiveItem = useSetRecoilState(activeSidebarItemState)
 
@@ -18,7 +17,7 @@ const Dashboard = () => {
         } else {
             // Set according to current path
             const currentPath = window.location.pathname
-            const matchingItem = clientPortalConfig.menuItems.find((item) => 
+            const matchingItem = rndPreAuditConfig.menuItems.find((item) => 
                 currentPath.endsWith(item.path)
             )
             if (matchingItem) {
@@ -31,18 +30,17 @@ const Dashboard = () => {
     }, [location, setActiveItem])
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-blue-50">
             <Navbar />
             <Sidebar 
-                menuItems={clientPortalConfig.menuItems}
-                basePath={clientPortalConfig.basePath}
+                menuItems={rndPreAuditConfig.menuItems}
+                basePath={rndPreAuditConfig.basePath}
             />
-            <div className="ml-[250px] max-lg:ml-0 pt-20 p-6 min-h-screen bg-blue-50">
+            <div className="ml-[250px] max-lg:ml-0 pt-20 p-6">
                 <Outlet />
             </div>
         </div>
     )
 }
 
-export default Dashboard
-
+export default RNDPreAuditDashboard 
