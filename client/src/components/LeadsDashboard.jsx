@@ -3,9 +3,11 @@ import { useRecoilValue, useSetRecoilState } from 'recoil'
 import { leadStatsState, newLeadsListState, approvedApplicationsState } from '../state/leadState' // Import state atoms
 import {FaUserPlus,FaFileAlt,FaCheckCircle,FaUsers,FaArrowUp,FaArrowDown,FaBuilding,FaUtensils,FaCapsules,FaEllipsisH,FaExternalLinkAlt,FaKey} from 'react-icons/fa'
 import { useNavigate } from 'react-router-dom'
-import { allocatedViewSubTabState, leadCenterMainTabState, leadsViewSubTabState } from '@/state/leadsCenterState'
+import { allocatedViewSubTabState, leadCenterMainTabState, leadsViewSubTabState, userApprovalDashboardState } from '@/state/leadsCenterState'
 import noleads from '../assets/noleads.svg'
 import GenerateCredentialsModal from './layout/GenerateCredentialsModal'
+import ApprovalDashboard from './ApprovalDashboard/ApprovalDashboard'
+import { activeSidebarItemState } from '@/state/atom'
 
 const cardBaseClass ='bg-white border border-gray-200 rounded-lg p-4 flex items-center gap-4 shadow-sm hover:shadow-md transition-shadow duration-200'
 const iconBaseClass = 'text-xl p-3 rounded-full w-11 h-11 flex justify-center items-center text-white'
@@ -137,6 +139,20 @@ const ApprovedApplicationRow = ({ app }) => {
         )
         // Replace above with <img src={app.logo} ... /> if you have actual logos
     }
+    const setUserApprovalDashboard = useSetRecoilState(userApprovalDashboardState)
+    const setActiveItem = useSetRecoilState(activeSidebarItemState)
+    const navigate = useNavigate()
+
+    const handleViewApprovalDashboard = (app) => {
+        // setActiveItem("leads")
+        setUserApprovalDashboard({
+            open: true,
+            lead: app,
+            approvedTab: true
+        })
+        navigate('/crm/leads')
+    }
+
 
     return (
         <tr>
@@ -157,7 +173,7 @@ const ApprovedApplicationRow = ({ app }) => {
             <button className="py-1.5 px-3 border border-gray-300 bg-white text-gray-700 rounded-md text-sm ml-2 hover:bg-gray-50 inline-flex items-center" onClick={()=> handleAllocateApp()}>
                      <FaExternalLinkAlt   className="mr-1.5"/> Allocate
                  </button>
-                 <button className="py-1.5 px-3 border border-gray-300 bg-white text-gray-700 rounded-md text-sm ml-2 hover:bg-gray-50 inline-flex items-center" onClick={()=> handleGoToDashboard()}>
+                 <button className="py-1.5 px-3 border border-gray-300 bg-white text-gray-700 rounded-md text-sm ml-2 hover:bg-gray-50 inline-flex items-center"   onClick={() => handleViewApprovalDashboard(app)}>
                      <FaExternalLinkAlt   className="mr-1.5"/> Go to Dashboard
                  </button>
                
@@ -188,6 +204,7 @@ const LeadsDashboard = ({ departmentId = null }) => {
         setAllocatedSubTab(allocatedSubTab)
         navigate('/crm/leads')
     }
+
 
     return (
         // Main wrapper for the entire component block

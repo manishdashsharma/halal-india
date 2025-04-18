@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import Navbar from '../../components/layout/Navbar'
 import Sidebar from '../../components/layout/Sidebar'
-import { Outlet, useLocation } from 'react-router-dom'
+import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { useSetRecoilState } from 'recoil'
 import { activeSidebarItemState } from '../../state/atom'
 import { rndPreAuditConfig } from '@/configs/sidebar.config'
@@ -9,14 +9,18 @@ import { rndPreAuditConfig } from '@/configs/sidebar.config'
 const RNDPreAuditDashboard = () => {
     const location = useLocation()
     const setActiveItem = useSetRecoilState(activeSidebarItemState)
-
+    const navigate = useNavigate()
     // Update activeItem when location changes
     useEffect(() => {
-        if (location.state && location.state.activeMenu) {
+        if(location.state && location.state.activeMenu) {
             setActiveItem(location.state.activeMenu)
         } else {
             // Set according to current path
             const currentPath = window.location.pathname
+            if (currentPath.toLowerCase() ==='/rnd-pre-audit/' || currentPath.toLowerCase() ==='/rnd-pre-audit') {
+                navigate('/rnd-pre-audit/dashboard')
+            }
+            
             const matchingItem = rndPreAuditConfig.menuItems.find((item) => 
                 currentPath.endsWith(item.path)
             )

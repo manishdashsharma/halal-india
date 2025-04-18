@@ -5,7 +5,7 @@ import { approvedApplicationsState, leadStatsState } from '@/state/leadState';
 import { FaCheckCircle, FaUsers, FaFileAlt, FaArrowUp, FaArrowDown, FaBuilding, FaUtensils, FaCapsules, FaExternalLinkAlt, FaPencilAlt, FaArrowRight } from 'react-icons/fa'; // Added FaPencilAlt, FaArrowRight for new icons
 import { useNavigate } from 'react-router-dom';
 // TODO: Potentially use RND-specific navigation state later
-import { allocatedViewSubTabState, leadCenterMainTabState, leadsViewSubTabState } from '@/state/leadsCenterState';
+import { allocatedViewSubTabState, leadCenterMainTabState, leadsViewSubTabState, userApprovalDashboardState } from '@/state/leadsCenterState';
 import noleads from '../../assets/noleads.svg'; // Adjusted path relative to Pages/RND_pre_audit
 
 // --- Styling Constants (Copied from LeadsDashboard) ---
@@ -77,6 +77,20 @@ const ApprovedApplicationRow = ({ app, index }) => {
         );
     };
 
+    const setUserApprovalDashboard = useSetRecoilState(userApprovalDashboardState)
+    const navigate = useNavigate()
+
+    const handleViewApprovalDashboard = (app) => {
+        // setActiveItem("leads")
+        setUserApprovalDashboard({
+            open: true,
+            lead: app,
+            approvedTab: true
+        })
+        navigate('/rnd-pre-audit/leads')
+    }
+
+
     return (
         <tr>
             {/* Added '#' column */}
@@ -99,7 +113,7 @@ const ApprovedApplicationRow = ({ app, index }) => {
                 <button className={buttonBaseClass} onClick={() => handleAllocateApp(app.id)}>
                     <FaExternalLinkAlt className="mr-1.5 h-3 w-3" /> Allocate
                 </button>
-                <button className={buttonBaseClass} onClick={() => handleGoToDashboard(app.id)}>
+                <button className={buttonBaseClass} onClick={() => handleViewApprovalDashboard(app)}>
                     <FaExternalLinkAlt className="mr-1.5 h-3 w-3" /> Go to dashboard
                 </button>
             </td>
@@ -145,6 +159,9 @@ const RNDLeadsDashboard = () => {
 
     // Use placeholder data for now
     const displayApps = placeholderApprovedApps; // Replace with 'approvedApps' when real data is available
+
+
+   
 
     return (
         // Main wrapper for the entire component block

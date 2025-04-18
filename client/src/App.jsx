@@ -10,6 +10,7 @@ import LeadCenter from './components/leads_Center/LeadsCenter';
 import RNDLeadsDashboard from './Pages/RND_pre_audit/RNDLeadsDashboard';
 import RNDPreAuditDashboard from './Pages/RND_pre_audit/Dashboard';
 import RNDLeadCenter from './Pages/RND_pre_audit/RNDLeadCenter';
+import FallbackRoute from './Pages/FallbackRoute';
 
 // CRM Pages (placeholder components)
 const CRMHome = () => <div>CRM Dashboard</div>;
@@ -40,13 +41,20 @@ const App = () => {
       </Route>
 
       {/* RND-pre-audit Routes */}
-      <Route path="RND-pre-audit" element={<RNDPreAuditDashboard />}>
+      <Route path="RND-pre-audit"  element={<RNDPreAuditDashboard />}>
         <Route path="dashboard" element={<RNDLeadsDashboard departmentId='RND-pre-audit' />} />
         <Route path="notification" element={<div>Notifications</div>} />
         <Route path="inbox" element={<div>Inbox</div>} />
         <Route path="leads" element={<RNDLeadCenter/>}/>
        
       </Route>
+
+
+
+      <Route
+            path="*"
+            element={<FallbackRoute />}
+        />
     </Routes>
   );
 };
